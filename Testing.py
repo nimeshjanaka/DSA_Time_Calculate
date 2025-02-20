@@ -22,7 +22,7 @@ def connect_database(host, user, password, database):
         print(f"Error connecting to database: {e}")
         return None
 
-# Function to create a test table and insert data
+# create a test table and insert data
 def create_test_table(conn, table_name="performance_test"):
     """
     Create a test table and populate it with 1 million random records.
@@ -45,8 +45,8 @@ def create_test_table(conn, table_name="performance_test"):
         """
         cursor.execute(create_table_query)
 
-        # Generate 1 million records
-        print("Generating 1 million records...")
+        # Generate  records
+        print("Generating  records...")
         for i in tqdm(range(1000000)):
             insert_query = f"""
             INSERT INTO {table_name} (user_id, username, email, created_at)
@@ -65,7 +65,7 @@ def create_test_table(conn, table_name="performance_test"):
         print(f"Error creating test table: {e}")
         conn.rollback()
 
-# Function to run the performance test
+# run the performance test
 def run_performance_test(conn, table_name="performance_test", num_iterations=100):
     """
     Run performance tests with and without an index on the user_id column.
@@ -104,7 +104,7 @@ def run_performance_test(conn, table_name="performance_test", num_iterations=100
 
     return results
 
-# Function to visualize performance results
+# visualize performance results
 def visualize_results(results):
     """
     Create visualizations of the performance results.
