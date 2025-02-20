@@ -8,12 +8,14 @@ db = mysql.connector.connect(
     password="956800544xV@",
     database="testing"
 )
-cursor = db.cursor()
+# queries execute
+cursor = db.cursor() 
 
-#  Create Tables
+# delete existing table for clear and reset database
 cursor.execute("DROP TABLE IF EXISTS numbers_no_index")
 cursor.execute("DROP TABLE IF EXISTS numbers_with_index")
 
+# Create Tables
 cursor.execute("""
     CREATE TABLE numbers_no_index (
         id INT PRIMARY KEY AUTO_INCREMENT,
@@ -34,19 +36,11 @@ db.commit()
 # Record insert
 def insert_numbers(table_name):
     start_time = time.time()
-    for i in range(1, 100001):
+    for i in range(1, 10001):
         cursor.execute(f"INSERT INTO {table_name} (value) VALUES ({i})")
     db.commit()
-    end_time = time.time()
-    return end_time - start_time
 
-time_no_index = insert_numbers("numbers_no_index")
-time_with_index = insert_numbers("numbers_with_index")
-
-print(f"Insertion Time Without Index: {time_no_index:.4f} seconds")
-print(f"Insertion Time With Index: {time_with_index:.4f} seconds")
-
-# Step 3: Measure Retrieval Speed
+#  Measure Retrieval Speed
 def fetch_numbers(table_name):
     start_time = time.time()
     cursor.execute(f"SELECT * FROM {table_name}")
